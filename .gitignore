@@ -1,0 +1,13 @@
+# IDE files
+.idea
+
+# Logs
+logs
+*.log
+
+# Dependency directory
+node_modules
+package-lock.json
+
+# Runtime configuration for swagger app
+config/runtime.yaml
