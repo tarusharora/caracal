@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
-  title: Hello World App
+  version: "1.0.1"
+  title: Hello Heady
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
@@ -10,7 +10,6 @@ basePath: /
 schemes:
   # tip: remove http to make production-grade
   - http
-  - https
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
@@ -42,6 +41,123 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /categories:
+    x-swagger-router-controller: categoryCtrl
+    post:
+      description: Creates a new category
+      # used as the method name of the controller
+      operationId: createCategory
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: category
+          description: The category to create.
+          schema:
+            $ref: "#/definitions/CategoryCreationRequest" 
+      responses:
+        "201":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ItemCreationResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      description: Get all categories
+      # used as the method name of the controller
+      operationId: getCategories
+      consumes:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/CategoriesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /products:
+    x-swagger-router-controller: productCtrl
+    post:
+      description: Creates a new product
+      # used as the method name of the controller
+      operationId: createProduct
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: product
+          description: The product to create.
+          schema:
+            $ref: "#/definitions/ProductCreationRequest" 
+      responses:
+        "201":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ItemCreationResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      description: Get all products
+      # used as the method name of the controller
+      operationId: getProductsByCategoryId
+      consumes:
+        - application/json
+      parameters:
+        - in: query
+          name: categoryId
+          type: string
+          description: Category id to filter the products
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ProductsResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /products/{productId}:
+    x-swagger-router-controller: productCtrl
+    patch:
+      description: Updates an existing product
+      # used as the method name of the controller
+      operationId: updateProduct
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: productId
+          description: Id of the product to update
+          type: string
+          required: true
+        - in: body
+          name: product
+          description: The product to update.
+          schema:
+            $ref: "#/definitions/ProductCreationRequest" 
+      responses:
+        "204":
+          description: Success
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -52,6 +168,68 @@ definitions:
     properties:
       message:
         type: string
+  CategoryCreationRequest:
+    required:
+      - name
+      - displayName
+    properties:
+      name:
+        type: string
+      displayName:
+        type: string
+      parentCategory:
+        type: string
+      ancestors:
+        type: array
+        items:
+          type: string
+      childCategories:
+        type: array
+        items:
+          type: string
+  ProductCreationRequest:
+    required:
+      - name
+      - displayName
+    properties:
+      name:
+        type: string
+      displayName:
+        type: string
+      categories:
+        type: array
+        items:
+          type: string
+  ItemCreationResponse:
+    required:
+      - id
+    properties:
+      id:
+        type: string
+  CategoriesResponse:
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+      displayName:
+        type: string
+      child_categories:
+        type: array
+        items:
+          type: object
+  ProductsResponse:
+    properties:
+      _id:
+        type: string
+      name:
+        type: string
+      displayName:
+        type: string
+      categories:
+        type: array
+        items:
+          type: object
   ErrorResponse:
     required:
       - message
