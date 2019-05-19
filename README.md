@@ -42,9 +42,8 @@ It makes use of JSON config-maps with an opinionated architecture.
 ## API Documentation
 
 
-  To view the the API documentation, 
-  Open the **api-documentation.html** present in the root directory of the app.
- This file is pushed just for reference. It should not be present like this ideally
+To view the the API documentation, 
+Download the HTML file from https://gist.github.com/tarusharora/d9c371a7ebf745ecdccf208ffc61f29d
  OR
 just copy the contents of swagger.yaml to editor.swagger.io
 
