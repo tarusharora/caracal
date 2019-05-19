@@ -149,7 +149,7 @@ paths:
           name: product
           description: The product to update.
           schema:
-            $ref: "#/definitions/ProductCreationRequest" 
+            $ref: "#/definitions/ProductUpdateRequest" 
       responses:
         "204":
           description: Success
@@ -190,6 +190,18 @@ definitions:
   ProductCreationRequest:
     required:
       - name
+      - displayName
+    properties:
+      name:
+        type: string
+      displayName:
+        type: string
+      categories:
+        type: array
+        items:
+          type: string
+  ProductUpdateRequest:
+    required:
       - displayName
     properties:
       name:
