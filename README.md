@@ -26,3 +26,46 @@ It makes use of JSON config-maps with an opinionated architecture.
 	
 - **app.js** - app bootstrap (load config map, start db, start server) 
 - **server.js** - server specific code, middleware, etc.
+
+## Steps to start the server
+
+ - Start the mongodb server
+- Put the mongodb uri in '../config/appSettings.json'
+ - Run the server using the following command
+      - `APP_SETTINGS_FILE_PATH="<<path to appSettings.json>>" node app.js`
+      - Please provide a valid path in above line depending on the operating system. 
+      - for example: C:\Users\xyz\caracal\config\appSettings.json
+      - APP_SETTINGS_FILE_PATH is an environment variable which holds the path to our config map.
+   
+- If you use VS Code, you can directly launch the program from Debug window (launch config already pushed)
+
+## API Documentation
+
+
+  To view the the API documentation, 
+  Open the **api-documentation.html** present in the root directory of the app.
+ This file is pushed just for reference. It should not be present like this ideally
+ OR
+just copy the contents of swagger.yaml to editor.swagger.io
+
+## Why Swagger?
+Swagger is mainly used for API contract, documentation, and basic validation. 
+
+## Next steps
+- Use of robust api validation libraries like `joi`for complex validation
+- Logging of each incoming/outgoing request and response with timings
+      -  Incoming Request to Node Server
+      - Outgoing Request to DB/Third party API
+      - Incoming Response from DB/Third party API
+      - Outgoing Response from Node server
+ - Dockerizing the app
+ - Deployment to any cloud provider
+ 
+ ## Sample Data
+ exported data of categories and products 
+ https://gist.github.com/tarusharora/7a9c587e7a27ec0172db0665c4948271
+ https://gist.github.com/tarusharora/6e319139ca72aa02a65c9458f3ba263b
+
+## Postman Collection
+https://www.getpostman.com/collections/464db8ed748bae47fdec
+Note: this postman collection is only applicable for above-mentioned sample dataset as it contains some hardcoded objectids.
